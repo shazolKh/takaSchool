@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <br><br>
+    <div class="col-md-8" style="margin: auto">
+        <div class="card">
+            <div class="card-header" style="color: black; font-weight: bold">
+                Edit Your Bid
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">PRICE</label>
+                                <input type="text" name="price" class="form-control" value="{{ bid.price }}" id="exampleInputEmail1" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+{% endblock %}

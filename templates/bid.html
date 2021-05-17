@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <br><br>
+    <div class="col-md-8" style="margin: auto">
+        <div class="card">
+            <div class="card-header" style="color: red; font-weight: bolder">
+                Minimum Bid Price: {{ product.min_price }}
+                <span style="float: right; color: black">
+                    {{ product.end_date | date }}
+                </span>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="{{ product.image.url }}" style="height: 210px; width: 210px;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-header" style="color: black; font-weight: bold">
+                Place Your Bid
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">PRICE</label>
+                                <input type="text" name="price" class="form-control" id="exampleInputEmail1" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="card-header" style="color: black; font-weight: bolder">
+                Bids On this Product
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-success table-striped table-hover text-center">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Bidder</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for bid in bids %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ bid.user.email }}</td>
+                                    <td>{{ bid.price }}</td>
+                                    <td>{{ bid.date | date }}</td>
+                                    <td>
+                                        <a href="{% url 'edit' bid.id %}"
+                                           class="btn btn-warning {% if request.user.pk != bid.user.id %}
+                                                disabled
+                                            {% endif %}"
+                                           tabindex="-1" role="button" aria-disabled="true">
+                                            Edit
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+{% endblock %}

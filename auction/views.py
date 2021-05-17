@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Product
+from .models import Product, Bid
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
@@ -40,3 +40,38 @@ def MyPostedItems(request, pk):
     }
     return render(request, 'myPostedItems.html', context)
 
+
+@login_required(login_url='login')
+def BidPlace(request, pk):
+    product = Product.objects.get(id=pk)
+    if request.method == 'POST':
+        user = request.user
+        Bid.objects.create(
+            user_id=user.pk,
+            product_id=pk,
+            price=request.POST.get('price')
+        )
+        return redirect('bid', pk)
+
+    bids = Bid.objects.filter(product_id=pk)
+
+    context = {
+        'product': product,
+        'bids': bids
+    }
+    return render(request, 'bid.html', context)
+
+
+@login_required(login_url='login')
+def EditBid(request, pk):
+    bid = Bid.objects.get(id=pk)
+    if request.method == 'POST':
+        Bid.objects.update(
+            price=request.POST.get('price')
+        )
+        return redirect('bid', bid.product.pk)
+
+    context = {
+        'bid': bid,
+    }
+    return render(request, 'editBid.html', context)

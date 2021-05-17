@@ -5,6 +5,7 @@ from django.contrib import messages
 from .models import NewUser
 from auction.models import Product
 from django.core.paginator import Paginator
+from datetime import datetime
 
 
 # Create your views here.
@@ -59,6 +60,8 @@ def Dashboard(request, user):
     context = {
         'name': name,
         'products': product,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'today': datetime.now()
     }
+
     return render(request, 'dashboard.html', context)
