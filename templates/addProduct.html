@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br> <br>
+    <div class="col-md-4" style="margin: auto">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Name</label>
+                <input type="text" name="name" class="form-control" id="exampleInputEmail1" required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Minimum Bidding Price</label>
+                <input type="text" name="price" class="form-control" id="exampleInputEmail1" required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">End Date</label>
+                <input type="datetime-local" name="e_date" class="form-control" id="exampleInputEmail1"
+                       required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Image</label>
+                <input type="file" name="image" class="form-control" id="exampleInputEmail1" required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Description</label>
+
+                <div class="form-floating">
+                    <textarea name="description" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                              style="height: 100px" required></textarea>
+                    <label for="floatingTextarea2">Details</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}

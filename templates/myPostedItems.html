@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block content %}
     <br><br>
     <div class="col-md-8" style="margin: auto">
@@ -11,10 +10,22 @@
                     {{ product.end_date }}
                 </span>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ product.name }}</h5>
-                    <p class="card-text">{{ product.description | truncatewords:20 }}</p>
-                    <a href="#" class="btn btn-primary">Place Bid</a>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">{{ product.description | truncatewords:50 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <img src="{{ product.image.url }}" style="height: 210px; width: 210px;"/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <br>
@@ -37,6 +48,4 @@
             </span>
         </div>
     </div>
-
-
 {% endblock %}

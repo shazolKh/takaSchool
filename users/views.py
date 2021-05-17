@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import NewUser
+from auction.models import Product
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -48,7 +50,15 @@ def Logout(request):
 @login_required(login_url='login')
 def Dashboard(request, user):
     name = NewUser.objects.get(user_name=user)
+    product = Product.objects.all()
+    paginator = Paginator(product, 4)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'name': name
+        'name': name,
+        'products': product,
+        'page_obj': page_obj
     }
     return render(request, 'dashboard.html', context)
