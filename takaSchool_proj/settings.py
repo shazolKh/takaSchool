@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-o+3da2imhnxrki+)^6&4parbu-5p7qu96u8j&=$ncyq46^4(fi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['taka-school.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
@@ -130,11 +130,12 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/images/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+MEDIA_URL = '/images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
