@@ -27,23 +27,32 @@
                     </div>
                 </div>
             </div>
-            <div class="card-header" style="color: black; font-weight: bold">
-                Place Your Bid
-            </div>
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <form method="post">
-                            {% csrf_token %}
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">PRICE</label>
-                                <input type="text" name="price" class="form-control" id="exampleInputEmail1" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+            {% now "Y-m-d" as today_date %}
+            {% if today_date > product.end_date|date:"Y-m-d" %}
+                <div class="card-header" style="color: red; font-weight: bold">
+                    Bidding Time is Over !!
+                </div>
+            {% else %}
+                <div class="card-header" style="color: black; font-weight: bold">
+                    Place Your Bid
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">PRICE</label>
+                                    <input type="number" name="price" class="form-control" id="exampleInputEmail1"
+                                           required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
+
             <br><br>
             <div class="card-header" style="color: black; font-weight: bolder">
                 Bids On this Product
@@ -69,13 +78,22 @@
                                     <td>{{ bid.price }}</td>
                                     <td>{{ bid.date | date }}</td>
                                     <td>
-                                        <a href="{% url 'edit' bid.id %}"
-                                           class="btn btn-warning {% if request.user.pk != bid.user.id %}
+                                        {% now "Y-m-d" as today_date %}
+                                        {% if today_date > product.end_date|date:"Y-m-d" %}
+                                            <a href="{% url 'edit' bid.id %}"
+                                               class="btn btn-warning disabled"
+                                               tabindex="-1" role="button" aria-disabled="true">
+                                                Date Expired
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'edit' bid.id %}"
+                                               class="btn btn-warning {% if request.user.pk != bid.user.id %}
                                                 disabled
                                             {% endif %}"
-                                           tabindex="-1" role="button" aria-disabled="true">
-                                            Edit
-                                        </a>
+                                               tabindex="-1" role="button" aria-disabled="true">
+                                                Edit
+                                            </a>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}

@@ -14,11 +14,10 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
                     <p class="card-text">{{ product.description | truncatewords:20 }}</p>
-                    <a href="{% url 'bid' product.id %}" class="btn btn-primary {% if today == product.end_date %}
-                        disabled
-                    {% endif %}"
+                    {% now "Y-m-d" as todays_date %}
+                    <a href="{% url 'bid' product.id %}" class="btn btn-primary"
                        tabindex="-1" role="button" aria-disabled="true">
-                        Place Bid
+                        Details
                     </a>
                 </div>
             </div>

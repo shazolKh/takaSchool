@@ -14,7 +14,7 @@
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">PRICE</label>
-                                <input type="text" name="price" class="form-control" value="{{ bid.price }}" id="exampleInputEmail1" required>
+                                <input type="number" name="price" class="form-control" value="{{ bid.price }}" id="exampleInputEmail1" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
