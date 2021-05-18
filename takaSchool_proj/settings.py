@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-o+3da2imhnxrki+)^6&4parbu-5p7qu96u8j&=$ncyq46^4(fi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://taka-school.herokuapp.com/', 'http://127.0.0.1:8000/']
+ALLOWED_HOSTS = ['taka-school.herokuapp.com/', '127.0.0.1:8000/']
 
 # Application definition
 
