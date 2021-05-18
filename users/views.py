@@ -110,17 +110,17 @@ def AdminDashboard(request):
     return render(request, 'adminDashboard.html', context)
 
 
-def Chart(request):
-    product_added_count = Product.objects.annotate(Count('created'))
-
-    data = []
-    labels = []
-
-    for i in product_added_count:
-        data.append(i['created'])
-        labels.append(datetime.strftime(i.created, '%/%d'))
-
-    return JsonResponse({
-        'data': data,
-        'labels': labels
-    })
+# def Chart(request):
+#     product_added_count = Product.objects.annotate(Count('created'))
+#
+#     data = []
+#     labels = []
+#
+#     for i in product_added_count:
+#         data.append(i['created'])
+#         labels.append(datetime.strftime(i.created, '%/%d'))
+#
+#     return JsonResponse({
+#         'data': data,
+#         'labels': labels
+#     })

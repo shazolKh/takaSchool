@@ -56,7 +56,10 @@ def BidPlace(request, pk):
     bids = Bid.objects.filter(product_id=pk)
 
     # Winner
-    winner = Bid.objects.order_by('-price')[0]
+    if Bid.objects.all().count() > 0:
+        winner = Bid.objects.order_by('-price')[0]
+    else:
+        winner = 0
 
     context = {
         'product': product,
