@@ -16,7 +16,7 @@
   
 #### Step 3:
   - Problem: At this step, I needed to compare datetime, and I spent hours to do that but I couldn't figured out why it dont't working.
-  - Solution: After some study I realized that, maybe the datetime formats are different of `datetime.now()` and `datetime stored in database`. So, I converted them into same format and compared them.
+  - Solution: After some study I realized that, `maybe` the datetime formats are different between `datetime.now()` and `datetime stored in database`. So, I converted them into same format and compared them.
   
 #### Step 4:
   - Didn't face ony perticular challenges.
