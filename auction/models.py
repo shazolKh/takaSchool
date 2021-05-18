@@ -20,7 +20,7 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     image = models.ImageField(upload_to=image_path, default='product/placeholder.png')
-    min_price = models.CharField(max_length=255)
+    min_price = models.BigIntegerField()
     end_date = models.DateTimeField(auto_now_add=False)
     created = models.DateTimeField(auto_now_add=True)
 
