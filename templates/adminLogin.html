@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br> <br>
+    <div class="col-md-4" style="margin: auto">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" id="exampleInputEmail1"
+                       aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+                <div id="emailHelp" class="form-text">
+                    Your password must be 8-20 characters long, contain letters and numbers, and must not contain
+                    spaces, special characters, or emoji.
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}

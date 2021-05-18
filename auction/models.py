@@ -2,6 +2,7 @@ import os
 import random
 from django.db import models
 from users.models import NewUser
+from PIL import Image
 
 
 # Create your models here.
@@ -18,10 +19,15 @@ class Product(models.Model):
     user = models.ForeignKey(NewUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField()
-    # price = models.CharField(max_length=255)
     image = models.ImageField(upload_to=image_path, default='product/placeholder.png')
     min_price = models.CharField(max_length=255)
     end_date = models.DateTimeField(auto_now_add=False)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.image.path)
+        img.save(self.image.path, quality=40, optimize=True)
 
     def __str__(self):
         return f'{self.name}'

@@ -1,0 +1,1 @@
+web: gunicorn takaSchool_proj.wsgi --log-file -

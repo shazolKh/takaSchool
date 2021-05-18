@@ -6,13 +6,44 @@ from .models import NewUser
 from auction.models import Product
 from django.core.paginator import Paginator
 from datetime import datetime
+from django.db.models import Sum, Count
+from django.http import JsonResponse
 
 
 # Create your views here.
 
+def Index(request):
+    return render(request, 'indexmain.html')
+
+
+def AdminLogin(request):
+    if request.user.is_authenticated:
+        return redirect('admin-dashboard')
+
+    if request.method == 'POST':
+        admin = NewUser.objects.values('email').filter(user_name='admin')
+        email_list = []
+        for i in admin:
+            email_list.append(i['email'])
+
+        email_str = ''.join(email_list)
+        first, second = email_str.split('@')
+
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        email = username + '@' + second
+
+        adm = authenticate(request, email=email, password=password)
+        if adm is not None:
+            login(request, adm)
+            return redirect('admin-dashboard')
+
+    return render(request, 'adminLogin.html')
+
+
 def Login(request):
     if request.user.is_authenticated:
-        return redirect('dashboard')
+        return redirect('dashboard', request.user)
 
     else:
         if request.method == 'POST':
@@ -45,7 +76,7 @@ def Login(request):
 @login_required(login_url='login')
 def Logout(request):
     logout(request)
-    return redirect('login')
+    return redirect('index')
 
 
 @login_required(login_url='login')
@@ -65,3 +96,31 @@ def Dashboard(request, user):
     }
 
     return render(request, 'dashboard.html', context)
+
+
+@login_required(login_url='login')
+def AdminDashboard(request):
+    running = Product.objects.filter(end_date__gte=datetime.today())
+    value = Product.objects.filter(end_date__gte=datetime.today()).aggregate(Sum('min_price'))
+
+    context = {
+        'running': running,
+        'value': value
+    }
+    return render(request, 'adminDashboard.html', context)
+
+
+def Chart(request):
+    product_added_count = Product.objects.annotate(Count('created'))
+
+    data = []
+    labels = []
+
+    for i in product_added_count:
+        data.append(i['created'])
+        labels.append(datetime.strftime(i.created, '%/%d'))
+
+    return JsonResponse({
+        'data': data,
+        'labels': labels
+    })
