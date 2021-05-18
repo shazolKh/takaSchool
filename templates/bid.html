@@ -32,6 +32,12 @@
                 <div class="card-header" style="color: red; font-weight: bold">
                     Bidding Time is Over !!
                 </div>
+                <div class="card-header" style="color: green; font-weight: bold">
+                    Winner of this Product is:
+                    <span style="color: black">
+                        {{ winner.user| upper }} with the Highest Price of {{ winner.price }}
+                    </span>
+                </div>
             {% else %}
                 <div class="card-header" style="color: black; font-weight: bold">
                     Place Your Bid
@@ -74,7 +80,7 @@
                             {% for bid in bids %}
                                 <tr>
                                     <th scope="row">{{ forloop.counter }}</th>
-                                    <td>{{ bid.user.email }}</td>
+                                    <td>{{ bid.user }}</td>
                                     <td>{{ bid.price }}</td>
                                     <td>{{ bid.date | date }}</td>
                                     <td>

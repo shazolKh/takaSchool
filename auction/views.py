@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Product, Bid
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Max
 
 
 # Create your views here.
@@ -55,9 +56,13 @@ def BidPlace(request, pk):
 
     bids = Bid.objects.filter(product_id=pk)
 
+    # Winner
+    winner = Bid.objects.order_by('-price')[0]
+
     context = {
         'product': product,
-        'bids': bids
+        'bids': bids,
+        'winner': winner,
     }
     return render(request, 'bid.html', context)
 

@@ -8,13 +8,17 @@
                 <div class="card-header" style="color: red; font-weight: bolder">
                     Minimum Bid Price: {{ product.min_price }}
                     <span style="float: right; color: black">
-                    {{ product.end_date | date }}
-                </span>
+                        {% now "Y-m-d" as today_date %}
+                        {% if today_date > product.end_date|date:"Y-m-d" %}
+                            Bidding Time Ended
+                        {% else %}
+                            Place Bid Before: {{ product.end_date | date }}
+                        {% endif %}
+                    </span>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
                     <p class="card-text">{{ product.description | truncatewords:20 }}</p>
-                    {% now "Y-m-d" as todays_date %}
                     <a href="{% url 'bid' product.id %}" class="btn btn-primary"
                        tabindex="-1" role="button" aria-disabled="true">
                         Details
@@ -41,6 +45,4 @@
             </span>
         </div>
     </div>
-
-
 {% endblock %}
