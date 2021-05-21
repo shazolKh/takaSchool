@@ -22,6 +22,6 @@
   - Didn't face ony perticular challenges.
   
 #### Step 5:
-  - Couldn't implement the `Chart` to visualise the data.
+  - Implemented All except `change the frequency of these charts from a dropdown`.
 #### Step 7: 
   - Deployed the Django applications on `Heroku` before. Also, smoothly done this time. 
