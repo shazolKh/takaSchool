@@ -36,7 +36,7 @@ class Product(models.Model):
 class Bid(models.Model):
     user = models.ForeignKey(NewUser, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    price = models.CharField(max_length=255)
+    price = models.BigIntegerField()
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

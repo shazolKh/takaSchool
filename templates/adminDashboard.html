@@ -30,13 +30,27 @@
         </div>
     </div>
     <br> <br>
-    <div class="col-md-6" style="margin: auto">
-        <div class="card">
-            <div class="card-header">
-                Featured
+    <div class="col-md-12">
+        <div class="row" style="margin: auto">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        Monthly Statistics
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <canvas id="myChart" width="400" height="300"></canvas>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        Monthly Statistics
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myChart1"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -47,10 +61,49 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: {{ label }},
+                datasets: [
+                    {
+                        label: 'Created product',
+                        data: {{ created_product }},
+                        backgroundColor: ['#F53C1F', '#29DEBF', '#29DE29', '#E73C77', '#514DDC', '#EFF92D', '#2B971C', '#33E8DB',
+                            '#201F1F', '#AC2AB9', '#34495E', '#F55C1F', '#29DEBF', '#29DE29', '#E73C77', '#514DDC', '#EFF92D',
+                            '#2B971C', '#33E8DB', '#29DEBF', '#29DE29', '#E73C77', '#514DDC', '#EFF92D', '#2B971C', '#33E8DB',
+                            '#29DEBF', '#29DE29', '#E73C77', '#514DDC', '#EFF92D',],
+
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Completed Auctions',
+                        data: {{ completed_auction }},
+                        backgroundColor: ['#201F1F', '#AC2AB9', '#34495E', '#F55C1F', '#29DEBF', '#29DE29', '#E73C77', '#514DDC', '#EFF92D',
+                            '#F55C1F', '#29DEBF', '#29DE29', '#E73C77', '#514DDC', '#EFF92D', '#2B971C', '#33E8DB',
+                            '#29DEBF', '#29DE29', '#E73C77', '#514DDC', '#EFF92D', '#514DDC', '#EFF92D', '#2B971C', '#33E8DB',
+                            '#2B971C', '#33E8DB', '#29DEBF', '#29DE29', '#E73C77',],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+    <script>
+        var ctx = document.getElementById('myChart1').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ label }},
                 datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    label: 'Total Auction value by price',
+                    data: {{ total_value }},
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',

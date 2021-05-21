@@ -94,13 +94,19 @@
                                                 Date Expired
                                             </a>
                                         {% else %}
-                                            <a href="{% url 'edit' bid.id %}"
-                                               class="btn btn-warning {% if request.user.pk != bid.user.id %}
-                                                disabled
-                                            {% endif %}"
-                                               tabindex="-1" role="button" aria-disabled="true">
-                                                Edit
-                                            </a>
+                                            {% if request.user.pk != bid.user.id %}
+                                                <a href="{% url 'edit' bid.id %}" class="btn btn-danger disabled"
+                                                   tabindex="-1"
+                                                   role="button" aria-disabled="true">
+                                                    Edit
+                                                </a>
+                                            {% else %}
+                                                <a href="{% url 'edit' bid.id %}" class="btn btn-warning" tabindex="-1"
+                                                   role="button" aria-disabled="true">
+                                                    Edit
+                                                </a>
+                                            {% endif %}
+
                                         {% endif %}
                                     </td>
                                 </tr>

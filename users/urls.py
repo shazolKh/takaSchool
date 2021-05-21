@@ -8,4 +8,5 @@ urlpatterns = [
     path('dashboard/<str:user>', views.Dashboard, name='dashboard'),
     path('logout/', views.Logout, name='logout'),
     path('admin-dashboard', views.AdminDashboard, name='admin-dashboard'),
+    path('chart-date/', views.Chart, name='chart-date'),
 ]

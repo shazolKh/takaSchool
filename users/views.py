@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import NewUser
-from auction.models import Product
+from auction.models import Product, Bid
 from django.core.paginator import Paginator
 from datetime import datetime
 from django.db.models import Sum, Count
@@ -103,24 +103,53 @@ def AdminDashboard(request):
     running = Product.objects.filter(end_date__gte=datetime.today())
     value = Product.objects.filter(end_date__gte=datetime.today()).aggregate(Sum('min_price'))
 
+    # product_added_count = Product.objects.all().count()
+
+    created_product = []
+    completed_auction = []
+    labels = []
+    total_value = []
+
+    for i in range(1, 31):
+        data_count = Product.objects.filter(created__day=i).count()
+        completed = Product.objects.filter(created__day=i).filter(end_date__lt=datetime.today()).count()
+        sum_value = Bid.objects.filter(date__day=i).aggregate(Sum('price'))
+        # sum_value = JsonResponse(sum_value, safe=False)
+        total_value.append(sum_value)
+        completed_auction.append(completed)
+        created_product.append(data_count)
+
+        labels.append(i)
+
+    print(list(total_value))
+    tv = []
+    for i in total_value:
+        tv.append(i['price__sum'])
+
+    tvs = [0 if i == None else i for i in tv]
+
     context = {
         'running': running,
-        'value': value
+        'value': value,
+        'created_product': created_product,
+        'completed_auction': completed_auction,
+        'total_value': tvs,
+        'label': labels
     }
     return render(request, 'adminDashboard.html', context)
 
 
-# def Chart(request):
-#     product_added_count = Product.objects.annotate(Count('created'))
-#
-#     data = []
-#     labels = []
-#
-#     for i in product_added_count:
-#         data.append(i['created'])
-#         labels.append(datetime.strftime(i.created, '%/%d'))
-#
-#     return JsonResponse({
-#         'data': data,
-#         'labels': labels
-#     })
+def Chart(request):
+    product_added_count = Product.objects.annotate(Count('created'))
+
+    data = []
+    labels = []
+
+    for i in product_added_count:
+        data.append(i['created'])
+        labels.append(datetime.strftime(i.created, '%/%d'))
+
+    return JsonResponse({
+        'data': data,
+        'labels': labels
+    })
